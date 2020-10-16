@@ -3,6 +3,8 @@
 Copy links to files or selections to GitHub and Azure DevOps directly from Visual Studio's text editor, Solution Explorer and document tab.
 Useful to share a link to a teammate without leaving the IDE.
 
+Download from the Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink
+
 # Copy Link to Selection
 
 ![image__1.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink/1.0/1602871432029/image__1.png)
