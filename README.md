@@ -48,3 +48,6 @@ Download from the Visual Studio Marketplace: https://marketplace.visualstudio.co
 
 **A:** If your branch doesn’t exist online, it will generate a link using the default branch on the remote repository (commonly Master).
     But of course if your local branch differs too much from the default remote one, the link may be inaccurate.
+    
+**Q:** Does it works from a Live Share guest session, or GitHub Codespaces session?
+**A:** No.
