@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!--  This is the file that defines the actual layout and type of the commands.
+        It is divided in different sections (e.g. command definition, command
+        placement, ...), with each defining a specific set of properties.
+        See the comment before each section for more details about how to
+        use it. -->
+
+    <!--  The VSCT compiler (the tool that translates this file into the binary
+        format that VisualStudio will consume) has the ability to run a preprocessor
+        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so
+        it is possible to define includes and macros with the same syntax used
+        in C++ files. Using this ability of the compiler here, we include some files
+        defining some of the constants that we will use inside the file. -->
+
+    <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+    <Extern href="stdidcmd.h"/>
+
+    <!--This header contains the command ids for the menus provided by the shell. -->
+    <Extern href="vsshlids.h"/>
+
+    <!--This header contains the image monikers for various images-->
+    <Include href="KnownImageIds.vsct"/>
+
+    <Commands package="guidCopyGitLinkPackage">
+        <!-- In this section you can define new menu groups. A menu group is a container for
+         other menus or buttons (commands); from a visual point of view you can see the
+         group as the part of a menu contained between two lines. The parent of a group
+         must be a menu. -->
+        <Groups>
+            <Group guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0x0500">
+                <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+            </Group>
+
+            <Group guid="guidCopyGitLinkPackageCmdSet" id="SolutionExplorerGroup" priority="0x0100"/>
+
+            <Group guid="guidCopyGitLinkPackageCmdSet" id="idgWSE_ContextMenu_ShellActions" priority="0x0600">
+                <Parent guid="guidWorkspaceExplorerToolWindowCmdSet" id="idmWSE_ContextMenu"/>
+            </Group>
+        </Groups>
+
+        <!--Buttons section. -->
+        <!--This section defines the elements the user can interact with, like a menu command or a button
+        or combo box in a toolbar. -->
+        <Buttons>
+            <!-- Copy Link To Selection in Editor context menu -->
+            <Button guid="guidCopyGitLinkPackageCmdSet" id="CopyAdoLinkToSelectionCommandId" priority="0x0100" type="Button">
+                <Parent guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" />
+                <Icon guid="ImageCatalogGuid" id="Link"/>
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <CommandFlag>AllowClientRole</CommandFlag>
+                <Strings>
+                    <ButtonText>Copy Link to Selection</ButtonText>
+                </Strings>
+            </Button>
+
+            <!-- Copy Link To This File in document tab context menu -->
+            <Button guid="guidCopyGitLinkPackageCmdSet" id="CopyLinkToFileCommandId" priority="0x0181" type="Button">
+                <Parent guid="guidSHLMainMenu" id="IDG_VS_EZ_DOCWINDOWPATHOPS"/>
+                <Icon guid="ImageCatalogGuid" id="Link" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <CommandFlag>AllowClientRole</CommandFlag>
+                <Strings>
+                    <ButtonText>Copy Link to This File</ButtonText>
+                </Strings>
+            </Button>
+
+            <!-- Copy Link To This File in Solution Explorer context menu in Solution View -->
+            <Button guid="guidCopyGitLinkPackageCmdSet" id="CopyLinkToFileSolutionItemCommandId" priority="0x0100" type="Button">
+                <Parent guid="guidCopyGitLinkPackageCmdSet" id="SolutionExplorerGroup"/>
+                <Icon guid="ImageCatalogGuid" id="Link" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <CommandFlag>AllowClientRole</CommandFlag>
+                <Strings>
+                    <ButtonText>Copy Link to This File</ButtonText>
+                </Strings>
+            </Button>
+
+            <!-- Copy Link To This File in Solution Explorer context menu in Open Folder View -->
+            <Button guid="guidCopyGitLinkPackageCmdSet" id="CopyLinkToFileOpenFolderItemCommandId" priority="0x0180" type="Button">
+                <Parent guid="guidCopyGitLinkPackageCmdSet" id="idgWSE_ContextMenu_ShellActions"/>
+                <Icon guid="ImageCatalogGuid" id="Link" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <CommandFlag>AllowClientRole</CommandFlag>
+                <Strings>
+                    <ButtonText>Copy Link to This File</ButtonText>
+                </Strings>
+            </Button>
+        </Buttons>
+    </Commands>
+
+    <CommandPlacements>
+        <!-- Placements in Solution Explorer -->
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="SolutionExplorerGroup" priority="0x0601">
+            <!-- Priority is after IDG_VS_CTXT_ITEM_TRANSFER -->
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="SolutionExplorerGroup" priority="0x0501">
+            <!-- Priority is after IDG_VS_CTXT_FOLDER_TRANSFER -->
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE"/>
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="SolutionExplorerGroup" priority="0x0751">
+            <!-- Priority is after IDG_VS_CTXT_PROJECT_TRANSFER -->
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="SolutionExplorerGroup" priority="0x0801">
+            <!-- Priority is after IDG_VS_CTXT_SOLUTION_TRANSFER -->
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE"/>
+        </CommandPlacement>
+
+        <!-- Placements of our editor context menu into other editors -->
+
+        <!-- XAML Editor -->
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xFF00">
+            <Parent guid="guidXamlUiCmds" id="IDM_XAML_EDITOR" />
+        </CommandPlacement>
+
+        <!-- JSON Editor -->
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xFF00">
+            <Parent guid="JsonCmdSet" id="jsonContextMenu"/>
+        </CommandPlacement>
+
+        <!-- Web Editors -->
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASAX" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASAX_CODE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASAX_CODE_VB" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASMX" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASMX_CODE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASMX_CODE_VB" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASPX" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASPX_CODE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_ASPX_CODE_VB" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_BASIC" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_HTML" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CMDSETID_HtmEdGrp" id="IDMX_HTM_SOURCE_SCRIPT" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="guidCSSGrp" id="IDM_CTX_SOURCE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="HtmlCmdSet" id="htmlContextMenu" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCopyGitLinkPackageCmdSet" id="EditorCommandGroup" priority="0xF000">
+            <Parent guid="CssCmdSet" id="cssContextMenu" />
+        </CommandPlacement>
+    </CommandPlacements>
+
+    <Symbols>
+        <!-- This is the package guid. -->
+        <GuidSymbol name="guidCopyGitLinkPackage" value="{11556a30-04ba-44b2-be8c-ec933438e34b}" />
+
+        <!-- This is the guid used to group the menu commands together -->
+        <GuidSymbol name="guidCopyGitLinkPackageCmdSet" value="{dfc4ce1e-b94a-42c1-ba44-23d7e4d59d24}">
+            <IDSymbol name="EditCutCopyCommandGroup" value="0x100" />
+            <IDSymbol name="EditorCommandGroup" value="0x101" />
+            <IDSymbol name="SolutionExplorerGroup" value="0x2000"/>
+            <IDSymbol name="idgWSE_ContextMenu_ShellActions" value="0x015"/>
+
+            <IDSymbol name="CopyAdoLinkToSelectionCommandId" value="0x200" />
+            <IDSymbol name="CopyLinkToFileCommandId" value="0x201"/>
+            <IDSymbol name="CopyLinkToFileSolutionItemCommandId" value="0x202"/>
+            <IDSymbol name="CopyLinkToFileOpenFolderItemCommandId" value="0x0213"/>
+        </GuidSymbol>
+
+        <!-- Solution Explorer Open Folder mode GUIDs and IDs. -->
+        <GuidSymbol name="guidWorkspaceExplorerToolWindowCmdSet" value="{cfb400f1-5c60-4f3c-856e-180d28def0b7}">
+            <IDSymbol name="idmWSE_ContextMenu" value="0x0002"/>
+        </GuidSymbol>
+
+        <!-- Needed for placing the editor context menu on XAML documents -->
+        <GuidSymbol name="guidXamlUiCmds" value="{4C87B692-1202-46AA-B64C-EF01FAEC53DA}">
+            <IDSymbol name="IDM_XAML_EDITOR" value="0x0103" />
+        </GuidSymbol>
+
+        <!-- Needed for placing the editor context menu on JSON documents -->
+        <GuidSymbol name="JsonCmdSet" value="{F718CA06-CF4F-4A0C-9106-E79E9EE5E7CD}">
+            <IDSymbol name="jsonContextMenu" value="3"/>
+        </GuidSymbol>
+
+        <!-- Needed for placing the editor context menu on web documents -->
+        <GuidSymbol name="CMDSETID_HtmEdGrp" value="{D7E8C5E1-BDB8-11D0-9C88-0000F8040A53}">
+            <IDSymbol name="IDMX_HTM_SOURCE_BASIC" value="0x0032" />
+            <IDSymbol name="IDMX_HTM_SOURCE_HTML" value="0x0033" />
+            <IDSymbol name="IDMX_HTM_SOURCE_SCRIPT" value="0x0034" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASPX" value="0x0035" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASPX_CODE" value="0x0036" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASPX_CODE_VB" value="0x0037" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASMX_CODE" value="0x0038" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASMX_CODE_VB" value="0x0039" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASMX" value="0x003A" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASAX" value="0x003B" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASAX_CODE" value="0x003C" />
+            <IDSymbol name="IDMX_HTM_SOURCE_ASAX_CODE_VB" value="0x003D" />
+        </GuidSymbol>
+        <GuidSymbol name="guidCSSGrp" value="{A764E896-518D-11D2-9A89-00C04F79EFC3}">
+            <IDSymbol name="IDM_CTX_SOURCE" value="0x0102" />
+        </GuidSymbol>
+        <GuidSymbol name="HtmlCmdSet" value="{78F03954-2FB8-4087-8CE7-59D71710B3BB}">
+            <IDSymbol name="htmlContextMenu" value="0x0001" />
+        </GuidSymbol>
+        <GuidSymbol name="CssCmdSet" value="{64DA400E-B4AD-4D67-AA92-4B7ACB01ECD5}">
+            <IDSymbol name="cssContextMenu" value="0x0002" />
+        </GuidSymbol>
+    </Symbols>
+</CommandTable>

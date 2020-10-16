@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{98B90887-A98D-4DFD-A4CA-F58C7364F7A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CopyGitLink.Tests</RootNamespace>
+    <AssemblyName>CopyGitLink.Tests</AssemblyName>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\GitOnlineServices\GitHubTests.cs" />
+    <Compile Include="Core\GitOnlineServices\AzureDevOpsTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter">
+      <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="MSTest.TestFramework">
+      <Version>2.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Def\CopyGitLink.Def\CopyGitLink.Def.csproj">
+      <Project>{fd237223-ca28-4632-9072-235947eda35c}</Project>
+      <Name>CopyGitLink.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Impl\CopyGitLink.OutOfProc\CopyGitLink.OutOfProc.csproj">
+      <Project>{b50b861f-9ab3-4387-adc7-0d91a09b5a06}</Project>
+      <Name>CopyGitLink.OutOfProc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Impl\CopyGitLink.Shared\CopyGitLink.Shared.csproj">
+      <Project>{8d22f2ba-f627-4b8a-801d-6bbc65f1cb08}</Project>
+      <Name>CopyGitLink.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Impl\CopyGitLink\CopyGitLink.csproj">
+      <Project>{21a07894-7f92-4238-a83a-9f97de685234}</Project>
+      <Name>CopyGitLink</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

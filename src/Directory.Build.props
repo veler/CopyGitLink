@@ -1,0 +1,44 @@
+<Project>
+    <PropertyGroup>
+        <RepoRoot>$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('.gitignore', '$(MSBuildThisFileDirectory)'))))\</RepoRoot>
+        <BaseOutputPath>$(RepoRoot)bin\</BaseOutputPath>
+        <OutputPath>$(BaseOutputPath)$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+        <PackagesConfigRestorePath>$(RepoRoot)packages\</PackagesConfigRestorePath>
+
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">Any CPU</Platform>
+        <FileAlignment>512</FileAlignment>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <LangVersion>8.0</LangVersion>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <DefineConstants>DEBUG</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
+        <VisualStudioVersion>16.0</VisualStudioVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="System" />
+      <Reference Include="System.Core" />
+      <Reference Include="System.Xml.Linq" />
+      <Reference Include="System.Data.DataSetExtensions" />
+      <Reference Include="Microsoft.CSharp" />
+      <Reference Include="System.Data" />
+      <Reference Include="System.Net.Http" />
+      <Reference Include="System.Xml" />
+    </ItemGroup>
+</Project>

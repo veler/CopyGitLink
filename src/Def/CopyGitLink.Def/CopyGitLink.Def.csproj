@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{FD237223-CA28-4632-9072-235947EDA35C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CopyGitLink.Def</RootNamespace>
+    <AssemblyName>CopyGitLink.Def</AssemblyName>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Design" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ICommandBase.cs" />
+    <Compile Include="IEditorService.cs" />
+    <Compile Include="IGitCommandService.cs" />
+    <Compile Include="IGitOnlineService.cs" />
+    <Compile Include="IOpenedDocumentService.cs" />
+    <Compile Include="IRepositoryService.cs" />
+    <Compile Include="ISolutionExplorerSelectionService.cs" />
+    <Compile Include="Models\CodeLensCopyLinkResult.cs" />
+    <Compile Include="Models\RepositoryInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

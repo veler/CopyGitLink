@@ -1,0 +1,10 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.VisualStudio.SDK" ExcludeAssets="runtime">
+            <Version>16.0.206</Version>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.SDK.Analyzers">
+            <Version>16.7.9</Version>
+        </PackageReference>
+    </ItemGroup>
+</Project>

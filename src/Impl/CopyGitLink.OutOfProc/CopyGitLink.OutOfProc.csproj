@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{B50B861F-9AB3-4387-ADC7-0D91A09B5A06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CopyGitLink.OutOfProc</RootNamespace>
+    <AssemblyName>CopyGitLink.OutOfProc</AssemblyName>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CodeLens\CopyLinkCodeLensDataPoint.cs" />
+    <Compile Include="CodeLens\CopyLinkCodeLensDataPointProvider.cs" />
+    <Compile Include="Composition\MefHostCompositionService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Def\CopyGitLink.Def\CopyGitLink.Def.csproj">
+      <Project>{FD237223-CA28-4632-9072-235947EDA35C}</Project>
+      <Name>CopyGitLink.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CopyGitLink.Shared\CopyGitLink.Shared.csproj">
+      <Project>{8D22F2BA-F627-4B8A-801D-6BBC65F1CB08}</Project>
+      <Name>CopyGitLink.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Language">
+      <Version>16.2.45</Version>
+    </PackageReference>
+    <PackageReference Include="StreamJsonRpc">
+      <Version>2.5.46</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
