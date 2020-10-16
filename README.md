@@ -50,4 +50,5 @@ Download from the Visual Studio Marketplace: https://marketplace.visualstudio.co
     But of course if your local branch differs too much from the default remote one, the link may be inaccurate.
     
 **Q:** Does it works from a Live Share guest session, or GitHub Codespaces session?
+
 **A:** No.
