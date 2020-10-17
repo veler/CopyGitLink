@@ -1,6 +1,6 @@
 # Copy Git Link
 
-Copy links to files or selections to GitHub and Azure DevOps directly from Visual Studio's text editor, Solution Explorer and document tab.
+Copy links to files or selections to GitHub, GitLab and Azure DevOps directly from Visual Studio's text editor, Solution Explorer and document tab.
 Useful to share a link to a teammate without leaving the IDE.
 
 Download from the Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink
@@ -31,7 +31,7 @@ Download from the Visual Studio Marketplace: https://marketplace.visualstudio.co
 
 **Q:** How do I use it?
 
-**A:** Install the extension, open in Visual Studio a local file coming from any Azure DevOps or GitHub repository. No need to open an entire solution, just a document is enough. Then, use one of the menu showed above to copy a link.
+**A:** Install the extension, open in Visual Studio a local file coming from any Azure DevOps, GitHub or GitLab repository. No need to open an entire solution, just a document is enough. Then, use one of the menu showed above to copy a link.
 
 
 **Q:** Can I share a link from any branch?
