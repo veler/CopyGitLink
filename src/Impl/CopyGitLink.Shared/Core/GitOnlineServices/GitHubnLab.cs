@@ -171,8 +171,6 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
         /// <returns></returns>
         private string ConvertSshUrlToHttpUrl(string repositoryUriString)
         {
-            // git => git@git.vptech.eu:veepee/transversal/products/partners/modules/checkout.git
-            // http=> https://git.vptech.eu/veepee/transversal/products/partners/modules/checkout.git
             if (repositoryUriString.Length > 4)
             {
                 return $"http://{repositoryUriString.Substring(4).Replace(':', '/')}";
