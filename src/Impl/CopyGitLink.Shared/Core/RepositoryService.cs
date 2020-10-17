@@ -189,7 +189,7 @@ namespace CopyGitLink.Shared.Core
                     var repositoryFolderInfo = new DirectoryInfo(knownRepositoryFolder);
 
                     while (directoryPathInfo.Parent != null)
-                    {
+                    {  
                         if (string.Equals(directoryPathInfo.Parent.FullName + "\\", repositoryFolderInfo.FullName, StringComparison.Ordinal))
                         {
                             repositoryFolder = knownRepositoryFolder;
