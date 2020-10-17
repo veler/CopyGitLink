@@ -84,13 +84,13 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             // Link to a file without line to select.
             string url = $"https://{host}/{organization}/{repositoryName}/blob/{branchName}/{relativePath}";
 
-            if (startLineNumber.HasValue)
+            if (endLineNumber.HasValue)
             {
                 // Link to a file with line to select.
                 url += $"#L{endLineNumber + 1}";
             }
 
-            if (endLineNumber.HasValue && host.Contains("github"))
+            if (startLineNumber.HasValue && host.Contains("github"))
             {
                 url += $"-L{startLineNumber + 1}";
             }
@@ -150,11 +150,9 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                 // Trims the .git suffix
                 properties[Host] = repositoryUri.Host;
                 properties[Repository] = repositoryUri.Segments[repositoryNameIndex].Substring(0, repositoryUri.Segments[repositoryNameIndex].Length - 4);
-                var organizationInfo = repositoryUri.Segments
-                    .Skip(1)
-                    .Take(repositoryUri.Segments.Length - 2);
-
+                var organizationInfo = repositoryUri.Segments.Skip(1).Take(repositoryUri.Segments.Length - 2);
                 properties[Organization] = string.Join("", organizationInfo).TrimEnd('/');
+                
                 return true;
             }
             else
