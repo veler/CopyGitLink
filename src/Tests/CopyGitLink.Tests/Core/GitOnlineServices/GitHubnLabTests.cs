@@ -33,6 +33,11 @@ namespace CopyGitLink.Tests.Core.GitOnlineServices
             Assert.AreEqual("dotnet/lang", repositoryInfo.Properties["Organization"]);
             Assert.AreEqual("csharp", repositoryInfo.Properties["Repository"]);
             Assert.AreEqual("git.constoso.eu", repositoryInfo.Properties["Host"]);
+
+            Assert.IsTrue(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "ssh@git.constoso.eu:dotnet/lang/csharp.git", CancellationToken.None, out repositoryInfo));
+            Assert.AreEqual("dotnet/lang", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("csharp", repositoryInfo.Properties["Repository"]);
+            Assert.AreEqual("git.constoso.eu", repositoryInfo.Properties["Host"]);
         }
 
         [TestMethod]
@@ -41,6 +46,8 @@ namespace CopyGitLink.Tests.Core.GitOnlineServices
             var gitHubnLab = new GitHubnLab(null);
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "http://github.com/microsoft/vscode", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "git@git.constoso.eu:dotnet/lang/csharp", CancellationToken.None, out _));
+            Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "gitfoo@git.constoso.eu:dotnet/lang/csharp.git", CancellationToken.None, out _));
+            Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "sshfoo@git.constoso.eu:dotnet/lang/csharp.git", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "http://contoso.visualstudio.com/Contoso", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "https://facebook.com", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "www.github.com/dotnet/roslyn.git", CancellationToken.None, out _));

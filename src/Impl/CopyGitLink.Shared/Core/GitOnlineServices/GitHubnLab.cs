@@ -20,8 +20,8 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
         private const string Repository = "Repository";
         private const string Host = "Host";
         private const string RemoteGitEnding = ".git";
-        private const string UrlPrefixGit = "git";
-        private const string UrlPrefixSsh = "ssh";
+        private const string UrlPrefixGit = "git@";
+        private const string UrlPrefixSsh = "ssh@";
 
         private readonly IGitCommandService _gitCommandService;
 
@@ -171,7 +171,7 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
         {
             if (repositoryUriString.Length > 4)
             {
-                return $"http://{repositoryUriString.Substring(4).Replace(':', '/')}";
+                return $"https://{repositoryUriString.Substring(4).Replace(':', '/')}";
             }
             return repositoryUriString;
         }
