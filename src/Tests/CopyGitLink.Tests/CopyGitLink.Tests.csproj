@@ -21,7 +21,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\GitOnlineServices\GitHubTests.cs" />
+    <Compile Include="Core\GitOnlineServices\GitHubnLabTests.cs" />
     <Compile Include="Core\GitOnlineServices\AzureDevOpsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

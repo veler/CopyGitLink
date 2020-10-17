@@ -15,7 +15,7 @@
   <ItemGroup>
     <Compile Include="Core\GitCommandService.cs" />
     <Compile Include="Core\GitOnlineServices\AzureDevOps.cs" />
-    <Compile Include="Core\GitOnlineServices\GitHub.cs" />
+    <Compile Include="Core\GitOnlineServices\GitHubnLab.cs" />
     <Compile Include="Core\NativeMethods.cs" />
     <Compile Include="Core\RepositoryService.cs" />
     <Compile Include="PkgIds.cs" />
