@@ -109,11 +109,7 @@ namespace CopyGitLink.Commands
 
         private (int, int) SwapLineNumber(int startLineNumber, int endLineNumber)
         {
-            var tempLineNumber = startLineNumber;
-            startLineNumber = endLineNumber;
-            endLineNumber = tempLineNumber;
-
-            return (startLineNumber, endLineNumber);
+            return (endLineNumber, startLineNumber);
         }
     }
 }

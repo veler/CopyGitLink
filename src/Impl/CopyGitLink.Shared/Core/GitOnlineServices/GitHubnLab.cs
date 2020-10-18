@@ -138,27 +138,34 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                 return false;
             }
 
-            properties = new Dictionary<string, string>();
 
             // The host can be github, gitlab or a Self-Managed version of both.
             // It will be in the form of 
             // https://{github|gitlab|Self-Managed}.{extension}/{org or user}/{repo name}.git
             // Must have .git uri ending
-            var repositoryNameIndex = repositoryUri.Segments.Length - 1;
-            if (repositoryUri.Segments[repositoryNameIndex].IndexOf(RemoteGitEnding, StringComparison.Ordinal) > 0)
+            if ( repositoryUri.Segments.Length >= 3)
             {
-                // Trims the .git suffix
-                properties[Host] = repositoryUri.Host;
-                properties[Repository] = repositoryUri.Segments[repositoryNameIndex].Substring(0, repositoryUri.Segments[repositoryNameIndex].Length - 4);
-                var organizationInfo = repositoryUri.Segments.Skip(1).Take(repositoryUri.Segments.Length - 2);
-                properties[Organization] = string.Join("", organizationInfo).TrimEnd('/');
-                
-                return true;
+                var repositoryNameIndex = repositoryUri.Segments.Length - 1;
+                if (repositoryUri.Segments[repositoryNameIndex].IndexOf(RemoteGitEnding, StringComparison.Ordinal) > 0)
+                {
+                    properties = new Dictionary<string, string>
+                    {
+                        [Host] = repositoryUri.Host,
+                        // Trims the .git suffix
+                        [Repository] = repositoryUri.Segments[repositoryNameIndex].Substring(0, repositoryUri.Segments[repositoryNameIndex].Length - 4),
+                        [Organization] = string.Join("", repositoryUri.Segments.Take(repositoryNameIndex)).Trim('/')
+                    };
+                    return true;
+                }
+                else
+                {
+                    properties = null;
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            properties = null;
+            return false;
         }
 
 
