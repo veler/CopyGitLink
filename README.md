@@ -52,3 +52,11 @@ Download from the Visual Studio Marketplace: https://marketplace.visualstudio.co
 **Q:** Does it works from a Live Share guest session, or GitHub Codespaces session?
 
 **A:** No.
+
+**Q:** Can i share GitLab link ?
+
+**A:** Yes.
+
+**Q:** Can i share entreprise self-managed github or gitlab link ?
+
+**A:** Yes.
