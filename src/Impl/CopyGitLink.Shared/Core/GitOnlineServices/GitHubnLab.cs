@@ -84,15 +84,15 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             // Link to a file without line to select.
             string url = $"https://{host}/{organization}/{repositoryName}/blob/{branchName}/{relativePath}";
 
-            if (endLineNumber.HasValue)
+            if (startLineNumber.HasValue)
             {
                 // Link to a file with line to select.
-                url += $"#L{endLineNumber + 1}";
+                url += $"#L{startLineNumber + 1}";
             }
 
-            if (startLineNumber.HasValue && host.Contains("github"))
+            if (endLineNumber.HasValue && host.Contains("github"))
             {
-                url += $"-L{startLineNumber + 1}";
+                url += $"-L{endLineNumber + 1}";
             }
 
             return url;

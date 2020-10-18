@@ -82,6 +82,11 @@ namespace CopyGitLink.Commands
                     if (_repositoryService.TryGetKnownRepository(activeDocumentFilePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo)
                         && repositoryInfo != null)
                     {
+                        // if we do a selection from the bottom to the top, the endLineNumber and startLineNumber are inverted
+                        if (startLineNumber > endLineNumber)
+                        {
+                            (startLineNumber, endLineNumber) = SwapLineNumber(startLineNumber, endLineNumber);
+                        }
                         string url = await repositoryInfo.Service.GenerateLinkAsync(
                                repositoryFolder,
                                repositoryInfo,
@@ -100,6 +105,15 @@ namespace CopyGitLink.Commands
                     }
                 }).Forget();
             }
+        }
+
+        private (int, int) SwapLineNumber(int startLineNumber, int endLineNumber)
+        {
+            var tempLineNumber = startLineNumber;
+            startLineNumber = endLineNumber;
+            endLineNumber = tempLineNumber;
+
+            return (startLineNumber, endLineNumber);
         }
     }
 }
