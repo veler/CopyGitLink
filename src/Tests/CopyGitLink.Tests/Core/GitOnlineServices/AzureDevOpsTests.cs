@@ -33,6 +33,20 @@ namespace CopyGitLink.Tests.Core.GitOnlineServices
             Assert.AreEqual("MyRepository", repositoryInfo.Properties["Repository"]);
             Assert.AreEqual("https://dev.azure.com/Contoso/", repositoryInfo.Properties["OrganizationUrl"]);
             Assert.AreEqual("https://dev.azure.com/Contoso/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
+
+            Assert.IsTrue(await azureDevOps.TryDetectRepositoryInformationAsync(string.Empty, "https://contoso@dev.azure.com/contoso/Contoso/_git/MyRepository", CancellationToken.None, out repositoryInfo));
+            Assert.AreEqual("contoso", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("Contoso", repositoryInfo.Properties["Project"]);
+            Assert.AreEqual("MyRepository", repositoryInfo.Properties["Repository"]);
+            Assert.AreEqual("https://dev.azure.com/contoso/", repositoryInfo.Properties["OrganizationUrl"]);
+            Assert.AreEqual("https://dev.azure.com/contoso/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
+
+            Assert.IsTrue(await azureDevOps.TryDetectRepositoryInformationAsync(string.Empty, "https://contoso@dev.azure.com/contoso/Contoso/_git/_optimized/MyRepository", CancellationToken.None, out repositoryInfo));
+            Assert.AreEqual("contoso", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("Contoso", repositoryInfo.Properties["Project"]);
+            Assert.AreEqual("MyRepository", repositoryInfo.Properties["Repository"]);
+            Assert.AreEqual("https://dev.azure.com/contoso/", repositoryInfo.Properties["OrganizationUrl"]);
+            Assert.AreEqual("https://dev.azure.com/contoso/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
         }
 
         [TestMethod]

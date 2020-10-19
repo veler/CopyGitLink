@@ -85,7 +85,8 @@ namespace CopyGitLink.Commands
                         // if we do a selection from the bottom to the top, the endLineNumber and startLineNumber are inverted
                         if (startLineNumber > endLineNumber)
                         {
-                            (startLineNumber, endLineNumber) = SwapLineNumber(startLineNumber, endLineNumber);
+                            (startLineNumber, endLineNumber, startColumnNumber, endColumnNumber)
+                                = SwapLineNumber(startLineNumber, endLineNumber, startColumnNumber, endColumnNumber);
                         }
                         string url = await repositoryInfo.Service.GenerateLinkAsync(
                                repositoryFolder,
@@ -107,9 +108,9 @@ namespace CopyGitLink.Commands
             }
         }
 
-        private (int, int) SwapLineNumber(int startLineNumber, int endLineNumber)
+        private (int, int, int, int) SwapLineNumber(int startLineNumber, int endLineNumber, int startColumnNumber, int endColumnNumber)
         {
-            return (endLineNumber, startLineNumber);
+            return (endLineNumber, startLineNumber, endColumnNumber, startColumnNumber);
         }
     }
 }

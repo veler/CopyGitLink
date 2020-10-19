@@ -21,6 +21,15 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
         private const string RepositoryUrl = "RepositoryUrl";
         private const string OrganizationUrl = "OrganizationUrl";
 
+        private static readonly string[] BannedGitUrlSegments
+            = new string[]
+            {
+                "/",
+                "_git/",
+                "_optimized/",
+                "DefaultCollection/"
+            };
+
         private readonly IGitCommandService _gitCommandService;
 
         [ImportingConstructor]
@@ -143,15 +152,38 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             // * visualstudio.com
             // * or a private server url such like https://tfs.contoso.com:8080/tfs/Project.
             // see https://docs.microsoft.com/en-us/azure/devops/server/admin/websitesettings?view=azure-devops
-            if (string.Equals(repositoryUri.Host, "dev.azure.com", StringComparison.OrdinalIgnoreCase)
-                && repositoryUri.Segments.Length >= 6)
+            if (string.Equals(repositoryUri.Host, "dev.azure.com", StringComparison.OrdinalIgnoreCase))
             {
-                properties[Organization] = repositoryUri.Segments[1].TrimEnd('/');
-                properties[Project] = repositoryUri.Segments[3].TrimEnd('/');
-                properties[Repository] = repositoryUri.Segments[5].TrimEnd('/');
-                properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Host}/{properties[Organization]}/";
-                properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
-                return true;
+                if (repositoryUri.Segments.Length >= 3)
+                {
+                    for (int i = 0; i < repositoryUri.Segments.Length; i++)
+                    {
+                        string segment = repositoryUri.Segments[i];
+                        if (!IsBannedSegment(segment))
+                        {
+                            if (!properties.ContainsKey(Organization))
+                            {
+                                properties[Organization] = repositoryUri.Segments[i].TrimEnd('/');
+                            }
+                            else if (!properties.ContainsKey(Project))
+                            {
+                                properties[Project] = repositoryUri.Segments[i].TrimEnd('/');
+                            }
+                            else if (!properties.ContainsKey(Repository))
+                            {
+                                properties[Repository] = repositoryUri.Segments[i].TrimEnd('/');
+                            }
+                            else
+                            {
+                                throw new Exception("Unexpected data in the Azure DevOps URL");
+                            }
+                        }
+                    }
+
+                    properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Host}/{properties[Organization]}/";
+                    properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
+                    return true;
+                }
             }
             else if (repositoryUri.Host.Count(c => c == '.') == 2
                      && repositoryUri.Host.EndsWith(".visualstudio.com", StringComparison.OrdinalIgnoreCase)
@@ -180,5 +212,17 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             return false;
         }
 
+        private bool IsBannedSegment(string segment)
+        {
+            for (int i = 0; i < BannedGitUrlSegments.Length; i++)
+            {
+                if (string.Equals(segment, BannedGitUrlSegments[i], StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
