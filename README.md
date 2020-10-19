@@ -34,6 +34,11 @@ Download from the Visual Studio Marketplace: https://marketplace.visualstudio.co
 **A:** Install the extension, open in Visual Studio a local file coming from any Azure DevOps, GitHub or GitLab repository. No need to open an entire solution, just a document is enough. Then, use one of the menu showed above to copy a link.
 
 
+**Q:** Can I share entreprise self-managed GitHub or GitLab link ?
+
+**A:** Yes.
+
+
 **Q:** Can I share a link from any branch?
 
 **A:** Yes, as long as what you're trying to share exists online (so make sure the code or file you share has been pushed on the current branch).
@@ -52,11 +57,3 @@ Download from the Visual Studio Marketplace: https://marketplace.visualstudio.co
 **Q:** Does it works from a Live Share guest session, or GitHub Codespaces session?
 
 **A:** No.
-
-**Q:** Can i share GitLab link ?
-
-**A:** Yes.
-
-**Q:** Can i share entreprise self-managed github or gitlab link ?
-
-**A:** Yes.
