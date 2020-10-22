@@ -26,7 +26,9 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             {
                 "/",
                 "_git/",
+                "_ssh/",
                 "_optimized/",
+                "_full/",
                 "DefaultCollection/"
             };
 
@@ -189,12 +191,33 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                      && repositoryUri.Host.EndsWith(".visualstudio.com", StringComparison.OrdinalIgnoreCase)
                      && repositoryUri.Segments.Length >= 5)
             {
-                properties[Organization] = repositoryUri.Host.Split('.')[0];
-                properties[Project] = repositoryUri.Segments[2].TrimEnd('/');
-                properties[Repository] = repositoryUri.Segments[4].TrimEnd('/');
-                properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Host}/";
-                properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
-                return true;
+                if (repositoryUri.Segments.Length >= 2)
+                {
+                    for (int i = 0; i < repositoryUri.Segments.Length; i++)
+                    {
+                        string segment = repositoryUri.Segments[i];
+                        if (!IsBannedSegment(segment))
+                        {
+                            if (!properties.ContainsKey(Project))
+                            {
+                                properties[Project] = repositoryUri.Segments[i].TrimEnd('/');
+                            }
+                            else if (!properties.ContainsKey(Repository))
+                            {
+                                properties[Repository] = repositoryUri.Segments[i].TrimEnd('/');
+                            }
+                            else
+                            {
+                                throw new Exception("Unexpected data in the Azure DevOps URL");
+                            }
+                        }
+                    }
+
+                    properties[Organization] = repositoryUri.Host.Split('.')[0];
+                    properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Host}/";
+                    properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
+                    return true;
+                }
             }
             else if (repositoryUri.Port == 8080
                      && repositoryUri.Segments.Length >= 5

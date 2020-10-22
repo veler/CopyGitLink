@@ -183,12 +183,14 @@ namespace CopyGitLink.Shared.Core
 
             lock (_repositories)
             {
+                var directoryPathInfo = new DirectoryInfo(filePath);
+                string fileParentDirectoryFullPath = directoryPathInfo.Parent.FullName + "\\";
+
                 foreach (string knownRepositoryFolder in _repositories.Keys)
                 {
-                    var directoryPathInfo = new DirectoryInfo(filePath);
                     var repositoryFolderInfo = new DirectoryInfo(knownRepositoryFolder);
 
-                    if (directoryPathInfo.Parent.FullName.StartsWith(repositoryFolderInfo.FullName, StringComparison.OrdinalIgnoreCase))
+                    if (fileParentDirectoryFullPath.StartsWith(repositoryFolderInfo.FullName, StringComparison.OrdinalIgnoreCase))
                     {
                         repositoryFolder = knownRepositoryFolder;
                         return true;

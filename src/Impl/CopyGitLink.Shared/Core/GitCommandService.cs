@@ -11,6 +11,8 @@ namespace CopyGitLink.Shared.Core
     [Export(typeof(IGitCommandService))]
     internal sealed class GitCommandService : IGitCommandService
     {
+        private const string HeadBranch = "HEAD";
+
         public async Task<string> GetBestRemoteGitBranchAsync(string repositoryFolder)
         {
             // Switch to background thread on purpose to avoid blocking the main thread.
@@ -18,6 +20,12 @@ namespace CopyGitLink.Shared.Core
 
             // retrieve the current branch.
             var currentBranch = GetCurrentBranchName(repositoryFolder);
+
+            if (string.Equals(currentBranch, HeadBranch, System.StringComparison.Ordinal))
+            {
+                // HEAD isn't a valid branch.
+                return GetDefaultBranchName(repositoryFolder);
+            }
 
             // check whether this branch exists online.
             if (BranchExistsOnline(repositoryFolder, currentBranch))
