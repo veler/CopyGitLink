@@ -177,7 +177,8 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                             }
                             else
                             {
-                                throw new Exception("Unexpected data in the Azure DevOps URL");
+                                properties = null;
+                                return false;
                             }
                         }
                     }
@@ -189,35 +190,33 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             }
             else if (repositoryUri.Host.Count(c => c == '.') == 2
                      && repositoryUri.Host.EndsWith(".visualstudio.com", StringComparison.OrdinalIgnoreCase)
-                     && repositoryUri.Segments.Length >= 5)
+                     && repositoryUri.Segments.Length >= 4)
             {
-                if (repositoryUri.Segments.Length >= 2)
+                for (int i = 0; i < repositoryUri.Segments.Length; i++)
                 {
-                    for (int i = 0; i < repositoryUri.Segments.Length; i++)
+                    string segment = repositoryUri.Segments[i];
+                    if (!IsBannedSegment(segment))
                     {
-                        string segment = repositoryUri.Segments[i];
-                        if (!IsBannedSegment(segment))
+                        if (!properties.ContainsKey(Project))
                         {
-                            if (!properties.ContainsKey(Project))
-                            {
-                                properties[Project] = repositoryUri.Segments[i].TrimEnd('/');
-                            }
-                            else if (!properties.ContainsKey(Repository))
-                            {
-                                properties[Repository] = repositoryUri.Segments[i].TrimEnd('/');
-                            }
-                            else
-                            {
-                                throw new Exception("Unexpected data in the Azure DevOps URL");
-                            }
+                            properties[Project] = repositoryUri.Segments[i].TrimEnd('/');
+                        }
+                        else if (!properties.ContainsKey(Repository))
+                        {
+                            properties[Repository] = repositoryUri.Segments[i].TrimEnd('/');
+                        }
+                        else
+                        {
+                            properties = null;
+                            return false;
                         }
                     }
-
-                    properties[Organization] = repositoryUri.Host.Split('.')[0];
-                    properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Host}/";
-                    properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
-                    return true;
                 }
+
+                properties[Organization] = repositoryUri.Host.Split('.')[0];
+                properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Host}/";
+                properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
+                return true;
             }
             else if (repositoryUri.Port == 8080
                      && repositoryUri.Segments.Length >= 5
