@@ -37,6 +37,7 @@
     <Compile Include="Commands\CopyLinkToThisFileEditorCommand.cs" />
     <Compile Include="Commands\CopyLinkToThisFileFolderCommand.cs" />
     <Compile Include="Commands\CopyLinkToThisFileSolutionCommand.cs" />
+    <Compile Include="Core\CopyLinkService.cs" />
     <Compile Include="Core\EditorService.cs" />
     <Compile Include="Core\OpenedDocumentService.cs" />
     <Compile Include="Core\SolutionExplorerSelectionService.cs" />
@@ -58,6 +59,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Telemetry">
+      <Version>16.3.59</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.7.3069" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +96,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

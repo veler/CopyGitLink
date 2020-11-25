@@ -1,14 +1,11 @@
 ﻿#nullable enable
 
 using CopyGitLink.Def;
-using CopyGitLink.Def.Models;
 using CopyGitLink.Shared;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
 using System;
 using System.ComponentModel.Composition;
-using System.Windows;
-using Task = System.Threading.Tasks.Task;
 
 namespace CopyGitLink.Commands
 {
@@ -17,6 +14,7 @@ namespace CopyGitLink.Commands
     {
         private readonly IOpenedDocumentService _openedDocumentService;
         private readonly IRepositoryService _repositoryService;
+        private readonly ICopyLinkService _copyLinkService;
 
         protected override int CommandId => PkgIds.CopyLinkToThisFileEditorCommandId;
 
@@ -25,10 +23,12 @@ namespace CopyGitLink.Commands
         [ImportingConstructor]
         internal CopyLinkToThisFileEditorCommand(
             IOpenedDocumentService openedDocumentService,
-            IRepositoryService repositoryService)
+            IRepositoryService repositoryService,
+            ICopyLinkService copyLinkService)
         {
             _openedDocumentService = openedDocumentService;
             _repositoryService = repositoryService;
+            _copyLinkService = copyLinkService;
         }
 
         protected override void BeforeQueryStatus(object sender, EventArgs e)
@@ -61,25 +61,10 @@ namespace CopyGitLink.Commands
                 return;
             }
 
-            Task.Run(async () =>
-            {
-                if (_repositoryService.TryGetKnownRepository(activeDocumentFilePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo)
-                    && repositoryInfo != null)
-                {
-                    string url
-                        = await repositoryInfo.Service.GenerateLinkAsync(
-                            repositoryFolder,
-                            repositoryInfo,
-                            activeDocumentFilePath)
-                        .ConfigureAwait(false);
-
-                    if (!string.IsNullOrEmpty(url))
-                    {
-                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                        Clipboard.SetText(url);
-                    }
-                }
-            }).Forget();
+            _copyLinkService.GenerateAndCopyLinkAsync(
+                "CopyToFileFromEditorTab",
+                activeDocumentFilePath)
+                .Forget();
         }
     }
 }

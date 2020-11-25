@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using CopyGitLink.Def;
-using CopyGitLink.Def.Models;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -16,7 +15,7 @@ namespace CopyGitLink.CodeLens.ViewModels
 {
     public sealed class CodeLensCopyLinkResultViewModel : INotifyPropertyChanged
     {
-        private readonly IRepositoryService _repositoryService;
+        private readonly ICopyLinkService _copyLinkService;
 
         private string? _url;
         private bool _linkGenerated;
@@ -49,9 +48,9 @@ namespace CopyGitLink.CodeLens.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public CodeLensCopyLinkResultViewModel(IRepositoryService repositoryService, ITextView textView, Span applicableSpan)
+        public CodeLensCopyLinkResultViewModel(ICopyLinkService copyLinkService, ITextView textView, Span applicableSpan)
         {
-            _repositoryService = repositoryService;
+            _copyLinkService = copyLinkService;
 
             CopyAgainCommand = new ActionCommand(ExecuteCopyAgainCommand);
 
@@ -82,14 +81,11 @@ namespace CopyGitLink.CodeLens.ViewModels
 
                 if (startLine != null
                     && endLine != null
-                    && !string.IsNullOrEmpty(filePath)
-                    && _repositoryService.TryGetKnownRepository(filePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo)
-                    && repositoryInfo != null)
+                    && !string.IsNullOrEmpty(filePath))
                 {
                     string url
-                        = await repositoryInfo.Service.GenerateLinkAsync(
-                            repositoryFolder,
-                            repositoryInfo,
+                        = await _copyLinkService.GenerateAndCopyLinkAsync(
+                            "CodeLens",
                             filePath,
                             startLine.LineNumber,
                             startColumnNumber: 0,
@@ -97,8 +93,10 @@ namespace CopyGitLink.CodeLens.ViewModels
                             endColumnNumber: endLine.Length)
                         .ConfigureAwait(false);
 
-                    Url = url;
-                    await CopyAgainCommand.ExecuteAsync().ConfigureAwait(false);
+                    if (!string.IsNullOrWhiteSpace(url))
+                    {
+                        Url = url;
+                    }
                 }
             }
 

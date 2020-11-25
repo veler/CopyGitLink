@@ -14,8 +14,9 @@ namespace CopyGitLink.Commands
         [ImportingConstructor]
         internal CopyLinkToThisFileFolderCommand(
             ISolutionExplorerSelectionService solutionExplorerSelectionService,
-            IRepositoryService repositoryService)
-            : base(solutionExplorerSelectionService, repositoryService)
+            IRepositoryService repositoryService,
+            ICopyLinkService copyLinkService)
+            : base(solutionExplorerSelectionService, repositoryService, copyLinkService)
         {
         }
     }

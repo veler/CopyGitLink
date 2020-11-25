@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using CopyGitLink.Def;
-using CopyGitLink.Def.Models;
 using CopyGitLink.Shared;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
@@ -9,8 +8,6 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Threading;
 using System;
 using System.ComponentModel.Composition;
-using System.Windows;
-using Task = System.Threading.Tasks.Task;
 
 namespace CopyGitLink.Commands
 {
@@ -19,6 +16,7 @@ namespace CopyGitLink.Commands
     {
         private readonly IOpenedDocumentService _openedDocumentService;
         private readonly IRepositoryService _repositoryService;
+        private readonly ICopyLinkService _copyLinkService;
         private readonly IEditorService _editorService;
 
         protected override int CommandId => PkgIds.CopyLinkToSelectionCommandId;
@@ -29,11 +27,13 @@ namespace CopyGitLink.Commands
         public CopyLinkToSelectionCommand(
             IOpenedDocumentService openedDocumentService,
             IRepositoryService repositoryService,
+            ICopyLinkService copyLinkService,
             IEditorService editorService)
             : base()
         {
             _openedDocumentService = openedDocumentService;
             _repositoryService = repositoryService;
+            _copyLinkService = copyLinkService;
             _editorService = editorService;
         }
 
@@ -77,40 +77,15 @@ namespace CopyGitLink.Commands
                             out int endLineNumber,
                             out int endColumnNumber)))
             {
-                Task.Run(async () =>
-                {
-                    if (_repositoryService.TryGetKnownRepository(activeDocumentFilePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo)
-                        && repositoryInfo != null)
-                    {
-                        // if we do a selection from the bottom to the top, the endLineNumber and startLineNumber are inverted
-                        if (startLineNumber > endLineNumber)
-                        {
-                            (startLineNumber, endLineNumber, startColumnNumber, endColumnNumber)
-                                = SwapLineNumber(startLineNumber, endLineNumber, startColumnNumber, endColumnNumber);
-                        }
-                        string url = await repositoryInfo.Service.GenerateLinkAsync(
-                               repositoryFolder,
-                               repositoryInfo,
-                               activeDocumentFilePath,
-                               startLineNumber,
-                               startColumnNumber,
-                               endLineNumber,
-                               endColumnNumber)
-                            .ConfigureAwait(false);
-
-                        if (!string.IsNullOrEmpty(url))
-                        {
-                            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                            Clipboard.SetText(url);
-                        }
-                    }
-                }).Forget();
+                _copyLinkService.GenerateAndCopyLinkAsync(
+                    "CopyToSelection",
+                    activeDocumentFilePath,
+                    startLineNumber,
+                    startColumnNumber,
+                    endLineNumber,
+                    endColumnNumber)
+                    .Forget();
             }
-        }
-
-        private (int, int, int, int) SwapLineNumber(int startLineNumber, int endLineNumber, int startColumnNumber, int endColumnNumber)
-        {
-            return (endLineNumber, startLineNumber, endColumnNumber, startColumnNumber);
         }
     }
 }

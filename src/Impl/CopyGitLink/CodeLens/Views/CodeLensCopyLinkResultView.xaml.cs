@@ -14,11 +14,11 @@ namespace CopyGitLink.CodeLens.Views
     /// </summary>
     public partial class CodeLensCopyLinkResultView : UserControl
     {
-        public CodeLensCopyLinkResultView(IRepositoryService repositoryService, ITextView textView, CodeLensCopyLinkResult result)
+        public CodeLensCopyLinkResultView(ICopyLinkService copyLinkService, ITextView textView, CodeLensCopyLinkResult result)
         {
             InitializeComponent();
 
-            DataContext = new CodeLensCopyLinkResultViewModel(repositoryService, textView, result.ApplicableSpan);
+            DataContext = new CodeLensCopyLinkResultViewModel(copyLinkService, textView, result.ApplicableSpan);
         }
 
         private void UrlTextBox_TextChanged(object sender, TextChangedEventArgs e)

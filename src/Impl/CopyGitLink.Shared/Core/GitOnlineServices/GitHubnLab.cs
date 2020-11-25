@@ -25,6 +25,8 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
 
         private readonly IGitCommandService _gitCommandService;
 
+        public string ServiceName => "GitHub and GitLab";
+
         [ImportingConstructor]
         internal GitHubnLab(IGitCommandService gitCommandService)
         {

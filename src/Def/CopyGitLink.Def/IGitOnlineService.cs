@@ -12,6 +12,11 @@ namespace CopyGitLink.Def
     public interface IGitOnlineService
     {
         /// <summary>
+        /// Gets the name of the Git online service.
+        /// </summary>
+        string ServiceName { get; }
+
+        /// <summary>
         /// Tries to generate a <see cref="RepositoryInfo"/> based on the repository push Uri and the repository folder.
         /// </summary>
         /// <param name="repositoryFolder">The location of the repository on the hard drive.</param>

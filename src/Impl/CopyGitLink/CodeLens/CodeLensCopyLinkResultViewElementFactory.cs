@@ -18,13 +18,13 @@ namespace CopyGitLink.CodeLens
     [Order]
     internal sealed class CodeLensCopyLinkResultViewElementFactory : IViewElementFactory
     {
-        private readonly IRepositoryService _repositoryService;
+        private readonly ICopyLinkService _copyLinkService;
 
         [ImportingConstructor]
         internal CodeLensCopyLinkResultViewElementFactory(
-            IRepositoryService repositoryService)
+            ICopyLinkService copyLinkService)
         {
-            _repositoryService = repositoryService;
+            _copyLinkService = copyLinkService;
         }
 
         public TView? CreateViewElement<TView>(ITextView textView, object model) where TView : class
@@ -37,7 +37,7 @@ namespace CopyGitLink.CodeLens
 
             if (model is CodeLensCopyLinkResult result)
             {
-                var detailsUI = new CodeLensCopyLinkResultView(_repositoryService, textView, result);
+                var detailsUI = new CodeLensCopyLinkResultView(_copyLinkService, textView, result);
                 return detailsUI as TView;
             }
 

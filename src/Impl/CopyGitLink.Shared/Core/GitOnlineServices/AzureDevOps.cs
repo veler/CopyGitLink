@@ -34,6 +34,8 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
 
         private readonly IGitCommandService _gitCommandService;
 
+        public string ServiceName => "Azure DevOps";
+
         [ImportingConstructor]
         internal AzureDevOps(IGitCommandService gitCommandService)
         {
