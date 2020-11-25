@@ -1,9 +1,13 @@
-# Copy Git Link
+<p align="center">
+  <img alt="pazword logo" src="./src/Impl/CopyGitLink/Icon.png" width="100px" />
+  <h1 align="center">Copy Git Link</h1>
+  <h2 align="center"><a href="https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink" target="_blank">Download from the Visual Studio Marketplace</a></h2>
+</p>
+
+[![Contributors](https://img.shields.io/github/contributors/veler/CopyGitLink?label=Contributors)](https://github.com/veler/CopyGitLink/graphs/contributors)
 
 Copy links to files or selections to GitHub, GitLab and Azure DevOps directly from Visual Studio's text editor, Solution Explorer and document tab.
 Useful to share a link to a teammate without leaving the IDE.
-
-Download from the Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink
 
 # Copy Link to Selection
 
