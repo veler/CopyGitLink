@@ -4,7 +4,9 @@
   <h2 align="center"><a href="https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink" target="_blank">Download from the Visual Studio Marketplace</a></h2>
 </p>
 
-[![Contributors](https://img.shields.io/github/contributors/veler/CopyGitLink?label=Contributors)](https://github.com/veler/CopyGitLink/graphs/contributors)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink&ssr=false#review-details) [![Installs](https://img.shields.io/visual-studio-marketplace/i/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink) [![Release Date](https://img.shields.io/visual-studio-marketplace/release-date/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink) [![Last Updated](https://img.shields.io/visual-studio-marketplace/last-updated/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink)
+
+[![License](https://img.shields.io/github/license/veler/CopyGitLink)](https://github.com/veler/CopyGitLink/blob/main/LICENSE) [![Contributors](https://img.shields.io/github/contributors/veler/CopyGitLink?label=Contributors)](https://github.com/veler/CopyGitLink/graphs/contributors)
 
 Copy links to files or selections to GitHub, GitLab and Azure DevOps directly from Visual Studio's text editor, Solution Explorer and document tab.
 Useful to share a link to a teammate without leaving the IDE.
