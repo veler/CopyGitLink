@@ -8,10 +8,10 @@ namespace CopyGitLink.Def
     public interface IGitCommandService
     {
         /// <summary>
-        /// Retrieves the closest Git branch from the active branch that exists online.
+        /// Retrieves the closest Git commit from the active branch that exists online.
         /// </summary>
         /// <param name="repositoryFolder">The root folder of the local repository</param>
-        /// <returns>Returns the name of a Git branch.</returns>
-        Task<string> GetBestRemoteGitBranchAsync(string repositoryFolder);
+        /// <returns>Returns the hash of a Git commit.</returns>
+        Task<string> GetBestGitCommitAsync(string repositoryFolder);
     }
 }

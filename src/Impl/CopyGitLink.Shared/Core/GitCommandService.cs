@@ -11,46 +11,20 @@ namespace CopyGitLink.Shared.Core
     [Export(typeof(IGitCommandService))]
     internal sealed class GitCommandService : IGitCommandService
     {
-        private const string HeadBranch = "HEAD";
-
-        public async Task<string> GetBestRemoteGitBranchAsync(string repositoryFolder)
+        public async Task<string> GetBestGitCommitAsync(string repositoryFolder)
         {
             // Switch to background thread on purpose to avoid blocking the main thread.
             await TaskScheduler.Default;
 
-            // retrieve the current branch.
-            var currentBranch = GetCurrentBranchName(repositoryFolder);
+            // retrieve the current commit.
+            var commitId = GetCurrentCommitId(repositoryFolder);
 
-            if (string.Equals(currentBranch, HeadBranch, System.StringComparison.Ordinal))
-            {
-                // HEAD isn't a valid branch.
-                return GetDefaultBranchName(repositoryFolder);
-            }
-
-            // check whether this branch exists online.
-            if (BranchExistsOnline(repositoryFolder, currentBranch))
-            {
-                return currentBranch;
-            }
-
-            // if not, get the default branch of the repository.
-            return GetDefaultBranchName(repositoryFolder);
+            return commitId;
         }
 
-        private bool BranchExistsOnline(string gitFolder, string branchName)
+        private string GetCurrentCommitId(string gitFolder)
         {
-            return string.IsNullOrWhiteSpace(RunGitCommand(gitFolder, @"git show-ref refs/heads/" + branchName));
-        }
-
-        private string GetCurrentBranchName(string gitFolder)
-        {
-            return RunGitCommand(gitFolder, "rev-parse --abbrev-ref HEAD");
-        }
-
-        private string GetDefaultBranchName(string gitFolder)
-        {
-            var result = RunGitCommand(gitFolder, @"symbolic-ref refs/remotes/origin/HEAD");
-            return result.Replace("refs/remotes/origin/", string.Empty);
+            return RunGitCommand(gitFolder, "rev-parse HEAD");
         }
 
         private string RunGitCommand(string repositoryFolder, string gitCommand)

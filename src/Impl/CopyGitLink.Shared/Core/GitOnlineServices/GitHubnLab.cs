@@ -64,9 +64,9 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             Requires.NotNull(repositoryInfo, nameof(repositoryInfo));
             Requires.NotNullOrEmpty(filePath, nameof(filePath));
 
-            string branchName
+            string commitId
                 = Uri.EscapeDataString(
-                    await _gitCommandService.GetBestRemoteGitBranchAsync(repositoryFolder)
+                    await _gitCommandService.GetBestGitCommitAsync(repositoryFolder)
                     .ConfigureAwait(false));
 
             var relativePath
@@ -81,10 +81,10 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             Requires.NotNullOrEmpty(organization, nameof(organization));
             Requires.NotNullOrEmpty(repositoryName, nameof(repositoryName));
             Requires.NotNullOrEmpty(host, nameof(host));
-            Requires.NotNullOrEmpty(branchName, nameof(branchName));
+            Requires.NotNullOrEmpty(commitId, nameof(commitId));
 
             // Link to a file without line to select.
-            string url = $"https://{host}/{organization}/{repositoryName}/blob/{branchName}/{relativePath}";
+            string url = $"https://{host}/{organization}/{repositoryName}/blob/{commitId}/{relativePath}";
 
             if (startLineNumber.HasValue)
             {
