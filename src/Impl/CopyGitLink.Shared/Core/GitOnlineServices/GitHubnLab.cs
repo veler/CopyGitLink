@@ -144,10 +144,10 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             // The host can be github, gitlab or a Self-Managed version of both.
             // It will be in the form of 
             // https://{github|gitlab|Self-Managed}.{extension}/{org or user}/{repo name}.git
-            // Must have .git uri ending
-            if ( repositoryUri.Segments.Length >= 3)
+            if (repositoryUri.Segments.Length >= 3)
             {
                 var repositoryNameIndex = repositoryUri.Segments.Length - 1;
+
                 if (repositoryUri.Segments[repositoryNameIndex].IndexOf(RemoteGitEnding, StringComparison.Ordinal) > 0)
                 {
                     properties = new Dictionary<string, string>
@@ -157,13 +157,17 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                         [Repository] = repositoryUri.Segments[repositoryNameIndex].Substring(0, repositoryUri.Segments[repositoryNameIndex].Length - 4),
                         [Organization] = string.Join("", repositoryUri.Segments.Take(repositoryNameIndex)).Trim('/')
                     };
-                    return true;
                 }
                 else
                 {
-                    properties = null;
-                    return false;
+                    properties = new Dictionary<string, string>
+                    {
+                        [Host] = repositoryUri.Host,
+                        [Repository] = repositoryUri.Segments[repositoryNameIndex],
+                        [Organization] = string.Join("", repositoryUri.Segments.Take(repositoryNameIndex)).Trim('/')
+                    };
                 }
+                return true;
             }
 
             properties = null;

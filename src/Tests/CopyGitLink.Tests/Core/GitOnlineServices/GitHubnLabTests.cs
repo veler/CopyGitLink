@@ -25,11 +25,20 @@ namespace CopyGitLink.Tests.Core.GitOnlineServices
             Assert.AreEqual("microsoft", repositoryInfo.Properties["Organization"]);
             Assert.AreEqual("vscode", repositoryInfo.Properties["Repository"]);
 
+            Assert.IsTrue(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "http://github.com/microsoft/vscode", CancellationToken.None, out repositoryInfo));
+            Assert.AreEqual("microsoft", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("vscode", repositoryInfo.Properties["Repository"]);
+
             Assert.IsTrue(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "git@github.com:dotnet/roslyn.git", CancellationToken.None, out repositoryInfo));
             Assert.AreEqual("dotnet", repositoryInfo.Properties["Organization"]);
             Assert.AreEqual("roslyn", repositoryInfo.Properties["Repository"]);
 
             Assert.IsTrue(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "git@git.constoso.eu:dotnet/lang/csharp.git", CancellationToken.None, out repositoryInfo));
+            Assert.AreEqual("dotnet/lang", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("csharp", repositoryInfo.Properties["Repository"]);
+            Assert.AreEqual("git.constoso.eu", repositoryInfo.Properties["Host"]);
+
+            Assert.IsTrue(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "git@git.constoso.eu:dotnet/lang/csharp", CancellationToken.None, out repositoryInfo));
             Assert.AreEqual("dotnet/lang", repositoryInfo.Properties["Organization"]);
             Assert.AreEqual("csharp", repositoryInfo.Properties["Repository"]);
             Assert.AreEqual("git.constoso.eu", repositoryInfo.Properties["Host"]);
@@ -44,8 +53,6 @@ namespace CopyGitLink.Tests.Core.GitOnlineServices
         public async Task BadGitHubUrisAsync()
         {
             var gitHubnLab = new GitHubnLab(null);
-            Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "http://github.com/microsoft/vscode", CancellationToken.None, out _));
-            Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "git@git.constoso.eu:dotnet/lang/csharp", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "gitfoo@git.constoso.eu:dotnet/lang/csharp.git", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "sshfoo@git.constoso.eu:dotnet/lang/csharp.git", CancellationToken.None, out _));
             Assert.IsFalse(await gitHubnLab.TryDetectRepositoryInformationAsync(string.Empty, "http://contoso.visualstudio.com/Contoso", CancellationToken.None, out _));
