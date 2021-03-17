@@ -4,7 +4,6 @@ using CopyGitLink.CodeLens.ViewModels;
 using CopyGitLink.Def;
 using CopyGitLink.Def.Models;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Threading;
 using System.Windows.Controls;
 
 namespace CopyGitLink.CodeLens.Views
@@ -31,7 +30,6 @@ namespace CopyGitLink.CodeLens.Views
             var viewModel = DataContext as CodeLensCopyLinkResultViewModel;
             if (viewModel != null && viewModel.LinkGenerated)
             {
-                viewModel.CopyAgainCommand.ExecuteAsync().Forget();
                 UrlTextBox.SelectAll();
             }
         }

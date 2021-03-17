@@ -22,7 +22,7 @@
             Orientation="Vertical"
             Visibility="{Binding LinkGenerated, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
             <TextBlock
-                Text="Please wait, we're creating a link..."/>
+                Text="Please wait, we're generating a link..."/>
         </StackPanel>
 
         <!-- Link Copied -->
@@ -39,22 +39,23 @@
                 Margin="0,15,0,10"
                 FontSize="18"
                 HorizontalAlignment="Center"
-                Text="Link copied"/>
+                Text="Link is ready"/>
 
             <StackPanel
+                Height="30"
                 Orientation="Horizontal">
                 <TextBox
                     x:Name="UrlTextBox"
                     Text="{Binding Url, Mode=OneWay}"
                     IsReadOnly="True"
-                    MaxWidth="225"
-                    MinHeight="24"
+                    MinWidth="250"
+                    MaxWidth="300"
+                    VerticalContentAlignment="Center"
                     TextChanged="UrlTextBox_TextChanged"/>
                 <Button
-                    Height="{Binding ElementName=UrlTextBox, Path=ActualHeight}"
                     MinWidth="80"
-                    Content="Copy again"
-                    Command="{Binding CopyAgainCommand}"/>
+                    Content="Copy"
+                    Command="{Binding CopyToClipboardCommand}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

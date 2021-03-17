@@ -61,9 +61,10 @@ namespace CopyGitLink.Commands
                 return;
             }
 
-            _copyLinkService.GenerateAndCopyLinkAsync(
+            _copyLinkService.GenerateLinkAsync(
                 "CopyToFileFromSolutionExplorer",
-                currentSolutionExplorerSelectedItemFullPath)
+                currentSolutionExplorerSelectedItemFullPath,
+                copyToClipboard: true)
                 .Forget();
         }
     }

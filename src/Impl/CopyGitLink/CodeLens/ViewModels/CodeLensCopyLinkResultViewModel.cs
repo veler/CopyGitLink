@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Threading;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows;
 using Task = System.Threading.Tasks.Task;
 
 namespace CopyGitLink.CodeLens.ViewModels
@@ -52,24 +52,29 @@ namespace CopyGitLink.CodeLens.ViewModels
         {
             _copyLinkService = copyLinkService;
 
-            CopyAgainCommand = new ActionCommand(ExecuteCopyAgainCommand);
+            CopyToClipboardCommand = new ActionCommand(ExecuteCopyToClipboardCommand);
 
             GenerateLinkAsync(textView, applicableSpan).Forget();
         }
 
-        #region CopyAgainCommand
+        #region CopyToClipboardCommand
 
-        public ActionCommand CopyAgainCommand { get; }
+        public ActionCommand CopyToClipboardCommand { get; }
 
-        private void ExecuteCopyAgainCommand()
+        private void ExecuteCopyToClipboardCommand()
         {
-            Clipboard.SetText(Url);
+            if (Url != null && !string.IsNullOrEmpty(Url))
+            {
+                _copyLinkService.PushToClipboardAsync(Url).Forget();
+            }
         }
 
         #endregion
 
         private async Task GenerateLinkAsync(ITextView textView, Span applicableSpan)
         {
+            DateTime startTime = DateTime.Now;
+
             // Switch to background thread on purpose to avoid blocking the main thread.
             await TaskScheduler.Default;
 
@@ -84,13 +89,14 @@ namespace CopyGitLink.CodeLens.ViewModels
                     && !string.IsNullOrEmpty(filePath))
                 {
                     string url
-                        = await _copyLinkService.GenerateAndCopyLinkAsync(
+                        = await _copyLinkService.GenerateLinkAsync(
                             "CodeLens",
                             filePath,
                             startLine.LineNumber,
                             startColumnNumber: 0,
                             endLine.LineNumber,
-                            endColumnNumber: endLine.Length)
+                            endColumnNumber: endLine.Length,
+                            copyToClipboard: false)
                         .ConfigureAwait(false);
 
                     if (!string.IsNullOrWhiteSpace(url))
@@ -98,6 +104,18 @@ namespace CopyGitLink.CodeLens.ViewModels
                         Url = url;
                     }
                 }
+            }
+
+            // Make sure the method took at least 1 sec to run.
+            // We do this so the users sees the "generating link in progress" experience which forces the user
+            // to slow down so he realizes he needs do to a secondary click to get the generated URL to the clipboard.
+            // We're not sending the URL to the clipboard as soon as we generated it because of too
+            // many misclicks on the CodeLens button.
+            DateTime endTime = DateTime.Now;
+            TimeSpan timeLeft = TimeSpan.FromSeconds(1) - (endTime - startTime);
+            if (timeLeft > TimeSpan.Zero)
+            {
+                await Task.Delay(timeLeft).ConfigureAwait(false);
             }
 
             LinkGenerated = true;

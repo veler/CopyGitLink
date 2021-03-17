@@ -61,9 +61,10 @@ namespace CopyGitLink.Commands
                 return;
             }
 
-            _copyLinkService.GenerateAndCopyLinkAsync(
+            _copyLinkService.GenerateLinkAsync(
                 "CopyToFileFromEditorTab",
-                activeDocumentFilePath)
+                activeDocumentFilePath,
+                copyToClipboard: true)
                 .Forget();
         }
     }

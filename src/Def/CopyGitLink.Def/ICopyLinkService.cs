@@ -19,12 +19,20 @@ namespace CopyGitLink.Def
         /// <param name="endLineNumber">The line where the selection ends</param>
         /// <param name="endColumnNumber">The column where the selection ends</param>
         /// <returns>Returns the Url that has been generated and copied, or null if no link has been generated.</returns>
-        Task<string> GenerateAndCopyLinkAsync(
+        Task<string> GenerateLinkAsync(
             string callerCommandName,
             string filePath,
             long? startLineNumber = null,
             long? startColumnNumber = null,
             long? endLineNumber = null,
-            long? endColumnNumber = null);
+            long? endColumnNumber = null,
+            bool copyToClipboard = true);
+
+        /// <summary>
+        /// Sends the given <paramref name="url"/> to the Windows' clipboard.
+        /// </summary>
+        /// <param name="url">A url</param>
+        /// <returns>A task.</returns>
+        Task PushToClipboardAsync(string url);
     }
 }

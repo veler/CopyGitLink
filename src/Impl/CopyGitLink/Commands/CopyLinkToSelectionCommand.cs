@@ -77,13 +77,14 @@ namespace CopyGitLink.Commands
                             out int endLineNumber,
                             out int endColumnNumber)))
             {
-                _copyLinkService.GenerateAndCopyLinkAsync(
+                _copyLinkService.GenerateLinkAsync(
                     "CopyToSelection",
                     activeDocumentFilePath,
                     startLineNumber,
                     startColumnNumber,
                     endLineNumber,
-                    endColumnNumber)
+                    endColumnNumber,
+                    copyToClipboard: true)
                     .Forget();
             }
         }

@@ -29,13 +29,14 @@ namespace CopyGitLink.Core
             _repositoryService = repositoryService;
         }
 
-        public async Task<string> GenerateAndCopyLinkAsync(
+        public async Task<string> GenerateLinkAsync(
             string callerCommandName,
             string filePath,
             long? startLineNumber = null,
             long? startColumnNumber = null,
             long? endLineNumber = null,
-            long? endColumnNumber = null)
+            long? endColumnNumber = null,
+            bool copyToClipboard = true)
         {
             try
             {
@@ -71,9 +72,10 @@ namespace CopyGitLink.Core
                     {
                         Log(callerCommandName, repositoryInfo.Service.ServiceName);
 
-                        // copy the link to the clipboard. UI Thread is required.
-                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                        Clipboard.SetText(url);
+                        if (copyToClipboard)
+                        {
+                            await PushToClipboardAsync(url).ConfigureAwait(false);
+                        }
                         return url;
                     }
                 }
@@ -85,6 +87,15 @@ namespace CopyGitLink.Core
             }
 
             return string.Empty;
+        }
+
+        public async System.Threading.Tasks.Task PushToClipboardAsync(string url)
+        {
+            Requires.NotNullOrEmpty(url, nameof(url));
+
+            // copy the link to the clipboard. UI Thread is required.
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            Clipboard.SetText(url);
         }
 
         private (long?, long?, long?, long?) SwapLineNumber(long? startLineNumber, long? endLineNumber, long? startColumnNumber, long? endColumnNumber)
