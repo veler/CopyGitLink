@@ -96,6 +96,10 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             {
                 url += $"-L{endLineNumber + 1}";
             }
+            else
+            {
+                url += $"-{endLineNumber + 1}";
+            }
 
             return url;
         }
