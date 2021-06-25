@@ -27,7 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Language">
-      <Version>16.2.45</Version>
+      <Version>17.0.82-g2ecf33c7f7</Version>
     </PackageReference>
     <PackageReference Include="StreamJsonRpc">
       <Version>2.5.46</Version>

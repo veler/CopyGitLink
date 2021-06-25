@@ -62,7 +62,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Telemetry">
       <Version>16.3.59</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.7.3069" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.2140-preview2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Def\CopyGitLink.Def\CopyGitLink.Def.csproj">

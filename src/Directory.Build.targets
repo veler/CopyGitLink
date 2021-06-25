@@ -1,7 +1,7 @@
 <Project>
     <ItemGroup>
         <PackageReference Include="Microsoft.VisualStudio.SDK" ExcludeAssets="runtime">
-            <Version>16.0.206</Version>
+            <Version>17.0.0-previews-1-31410-273</Version>
         </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.SDK.Analyzers">
             <Version>16.7.9</Version>
