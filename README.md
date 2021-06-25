@@ -1,7 +1,8 @@
 <p align="center">
   <img alt="pazword logo" src="./src/Impl/CopyGitLink/Icon.png" width="100px" />
   <h1 align="center">Copy Git Link</h1>
-  <h2 align="center"><a href="https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink" target="_blank">Download from the Visual Studio Marketplace</a></h2>
+  <h2 align="center"><a href="https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink2022" target="_blank">Download for Visual Studio 2022</a></h2>
+  <h2 align="center"><a href="https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink" target="_blank">Download for Visual Studio 2019</a></h2>
 </p>
 
 [![Rating](https://img.shields.io/visual-studio-marketplace/r/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink&ssr=false#review-details) [![Installs](https://img.shields.io/visual-studio-marketplace/i/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink) [![Release Date](https://img.shields.io/visual-studio-marketplace/release-date/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink) [![Last Updated](https://img.shields.io/visual-studio-marketplace/last-updated/EtienneBAUDOUX.CopyGitLink)](https://marketplace.visualstudio.com/items?itemName=EtienneBAUDOUX.CopyGitLink)
@@ -13,17 +14,17 @@ Useful to share a link to a teammate without leaving the IDE.
 
 # Copy Link to Selection
 
-![image__1.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink/1.0/1602871432029/image__1.png)
+![image__1.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink2022/1.4.2/1624647696521/image__1.png)
 
 # Copy Link to Method, Type, Property using CodeLens
 
-![image__2.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink/1.0/1602871432029/image__2.png)
+![image__2.png](hhttps://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink2022/1.4.2/1624647696521/image__2.png)
 
-![image__3.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink/1.0/1602871432029/image__3.png)
+![image__3.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink2022/1.4.2/1624647696521/image__3.png)
 
 # Copy Link to File from document tab
 
-![image__4.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink/1.0/1602871432029/image__4.png)
+![image__4.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink2022/1.4.2/1624647696521/image__4.png)
 
 # Copy Link to File from Solution Explorer
 
@@ -31,7 +32,7 @@ Useful to share a link to a teammate without leaving the IDE.
 * Solution View
 * Folder View
 
-![image__6.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink/1.0/1602871432029/image__6.png)
+![image__6.png](https://etiennebaudoux.gallerycdn.vsassets.io/extensions/etiennebaudoux/copygitlink2022/1.4.2/1624647696521/image__6.png)
 
 # FAQ
 
