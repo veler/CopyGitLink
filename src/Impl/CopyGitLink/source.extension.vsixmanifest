@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
         <Identity Id="CopyGitLink.ff217e03-1b3c-424f-a1f0-fe7a2b3b44f6" Version="1.4.1" Language="en-US" Publisher="Etienne Baudoux" />
-        <DisplayName>Copy Git Link</DisplayName>
+        <DisplayName>Copy Git Link 2019</DisplayName>
         <Description xml:space="preserve">Copy links to files or selections to GitHub, GitLab and Azure DevOps directly from Visual Studio's text editor, Solution Explorer and document tab.</Description>
         <MoreInfo>https://github.com/veler/CopyGitLink</MoreInfo>
         <License>LICENSE.txt</License>
