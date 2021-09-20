@@ -92,13 +92,16 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                 url += $"#L{startLineNumber + 1}";
             }
 
-            if (endLineNumber.HasValue && host.Contains("github"))
+            if (endLineNumber.HasValue)
             {
-                url += $"-L{endLineNumber + 1}";
-            }
-            else
-            {
-                url += $"-{endLineNumber + 1}";
+                if (host.Contains("github"))
+                {
+                    url += $"-L{endLineNumber + 1}";
+                }
+                else
+                {
+                    url += $"-{endLineNumber + 1}";
+                }
             }
 
             return url;
