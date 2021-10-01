@@ -15,10 +15,12 @@ namespace CopyGitLink.CodeLens.ViewModels
 {
     public sealed class CodeLensCopyLinkResultViewModel : INotifyPropertyChanged
     {
+        private readonly IRepositoryService _repositoryService;
         private readonly ICopyLinkService _copyLinkService;
 
         private string? _url;
         private bool _linkGenerated;
+        private bool _isLocalRepositoryExists;
 
         /// <summary>
         /// Gets the generated Url.
@@ -46,10 +48,28 @@ namespace CopyGitLink.CodeLens.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets whether a local repository exists or not.
+        /// </summary>
+        public bool IsLocalRepositoryExists
+        {
+            get => _isLocalRepositoryExists;
+            private set
+            {
+                _isLocalRepositoryExists = value;
+                RaisePropertyChangedAsync().Forget();
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public CodeLensCopyLinkResultViewModel(ICopyLinkService copyLinkService, ITextView textView, Span applicableSpan)
+        public CodeLensCopyLinkResultViewModel(
+            IRepositoryService repositoryService,
+            ICopyLinkService copyLinkService,
+            ITextView textView,
+            Span applicableSpan)
         {
+            _repositoryService = repositoryService;
             _copyLinkService = copyLinkService;
 
             CopyToClipboardCommand = new ActionCommand(ExecuteCopyToClipboardCommand);
@@ -78,30 +98,36 @@ namespace CopyGitLink.CodeLens.ViewModels
             // Switch to background thread on purpose to avoid blocking the main thread.
             await TaskScheduler.Default;
 
-            if (textView.TextBuffer.Properties.TryGetProperty(typeof(ITextDocument), out ITextDocument  textDocument))
+            if (textView.TextBuffer.Properties.TryGetProperty(typeof(ITextDocument), out ITextDocument textDocument))
             {
                 string filePath = textDocument.FilePath;
-                ITextSnapshotLine startLine = textView.TextBuffer.CurrentSnapshot.GetLineFromPosition(applicableSpan.Start);
-                ITextSnapshotLine endLine = textView.TextBuffer.CurrentSnapshot.GetLineFromPosition(applicableSpan.Start + applicableSpan.Length);
 
-                if (startLine != null
-                    && endLine != null
-                    && !string.IsNullOrEmpty(filePath))
+                IsLocalRepositoryExists = _repositoryService.IsFilePartOfKnownRepository(filePath);
+
+                if (IsLocalRepositoryExists)
                 {
-                    string url
-                        = await _copyLinkService.GenerateLinkAsync(
-                            "CodeLens",
-                            filePath,
-                            startLine.LineNumber,
-                            startColumnNumber: 0,
-                            endLine.LineNumber,
-                            endColumnNumber: endLine.Length,
-                            copyToClipboard: false)
-                        .ConfigureAwait(false);
+                    ITextSnapshotLine startLine = textView.TextBuffer.CurrentSnapshot.GetLineFromPosition(applicableSpan.Start);
+                    ITextSnapshotLine endLine = textView.TextBuffer.CurrentSnapshot.GetLineFromPosition(applicableSpan.Start + applicableSpan.Length);
 
-                    if (!string.IsNullOrWhiteSpace(url))
+                    if (startLine != null
+                        && endLine != null
+                        && !string.IsNullOrEmpty(filePath))
                     {
-                        Url = url;
+                        string url
+                            = await _copyLinkService.GenerateLinkAsync(
+                                "CodeLens",
+                                filePath,
+                                startLine.LineNumber,
+                                startColumnNumber: 0,
+                                endLine.LineNumber,
+                                endColumnNumber: endLine.Length,
+                                copyToClipboard: false)
+                            .ConfigureAwait(false);
+
+                        if (!string.IsNullOrWhiteSpace(url))
+                        {
+                            Url = url;
+                        }
                     }
                 }
             }

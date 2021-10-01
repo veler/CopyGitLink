@@ -14,7 +14,8 @@ namespace CopyGitLink.Def
         /// Gets the full path of the active document in the IDE.
         /// </summary>
         /// <returns>Returns the full path to the document.</returns>
-        string GetActiveDocumentFullPath();
+        /// <remarks>Returns an empty string if the active document is part of a miscellaneous project.</remarks>
+        string GetActiveSolutionDocumentFullPath();
 
         /// <summary>
         /// Gets the frame of the active document in the IDE.

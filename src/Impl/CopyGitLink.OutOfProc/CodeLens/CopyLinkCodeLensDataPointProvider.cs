@@ -39,7 +39,8 @@ namespace CopyGitLink.OutOfProc.CodeLens
             // (and potentially in the future too).
             await _repositoryService.DiscoverRepositoryAsync(descriptor.FilePath, token).ConfigureAwait(false);
 
-            return _repositoryService.IsFilePartOfKnownRepository(descriptor.FilePath);
+            // Always enable Copy Git Link To's CodeLens menu, even if the current document isn't part of a repository.
+            return true;
         }
 
         public Task<IAsyncCodeLensDataPoint?> CreateDataPointAsync(CodeLensDescriptor descriptor, CodeLensDescriptorContext descriptorContext, CancellationToken token)

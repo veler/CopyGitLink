@@ -4,6 +4,7 @@ using CopyGitLink.Def;
 using Microsoft;
 using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Threading;
@@ -115,6 +116,14 @@ namespace CopyGitLink.Core
                 || HierarchyUtilities.IsSolutionNode(hierarchy, itemId))
             {
                 return RetrieveCurrentSolutionPath();
+            }
+
+            if (hierarchy is IPersist persist
+                && ErrorHandler.Succeeded(persist.GetClassID(out Guid projectId))
+                && projectId == VSConstants.CLSID.MiscellaneousFilesProject_guid)
+            {
+                // Do not return the file path if the hierarchy is part of the miscellaneous project.
+                return string.Empty;
             }
 
             int hr;

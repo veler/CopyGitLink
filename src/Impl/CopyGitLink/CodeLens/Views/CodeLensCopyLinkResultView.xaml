@@ -1,15 +1,17 @@
 ﻿<UserControl x:Class="CopyGitLink.CodeLens.Views.CodeLensCopyLinkResultView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:CopyGitLink.CodeLens.Converters"
+             xmlns:controls="clr-namespace:CopyGitLink.Controls"
+             xmlns:imagecatalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
-             xmlns:imagecatalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog" xmlns:converters="clr-namespace:CopyGitLink.CodeLens.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800"
              IsVisibleChanged="UserControl_IsVisibleChanged">
-    
+
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
@@ -25,38 +27,45 @@
                 Text="Please wait, we're generating a link..."/>
         </StackPanel>
 
-        <!-- Link Copied -->
-        <StackPanel
-            HorizontalAlignment="Center"
-            Orientation="Vertical"
-            Visibility="{Binding LinkGenerated, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Visibility="{Binding LinkGenerated, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-            <imaging:CrispImage
-                Moniker="{x:Static imagecatalog:KnownMonikers.StatusOK}"
-                Height="48"
-                Width="48"/>
-            <TextBlock
-                Margin="0,15,0,10"
-                FontSize="18"
-                HorizontalAlignment="Center"
-                Text="Link is ready"/>
-
+            <!-- Link Generated -->
             <StackPanel
-                Height="30"
-                Orientation="Horizontal">
-                <TextBox
-                    x:Name="UrlTextBox"
-                    Text="{Binding Url, Mode=OneWay}"
-                    IsReadOnly="True"
-                    MinWidth="250"
-                    MaxWidth="300"
-                    VerticalContentAlignment="Center"
-                    TextChanged="UrlTextBox_TextChanged"/>
-                <Button
-                    MinWidth="80"
-                    Content="Copy"
-                    Command="{Binding CopyToClipboardCommand}"/>
+                HorizontalAlignment="Center"
+                Orientation="Vertical"
+                Visibility="{Binding IsLocalRepositoryExists, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                <imaging:CrispImage
+                    Moniker="{x:Static imagecatalog:KnownMonikers.StatusOK}"
+                    Height="48"
+                    Width="48"/>
+                <TextBlock
+                    Margin="0,15,0,10"
+                    FontSize="18"
+                    HorizontalAlignment="Center"
+                    Text="Link is ready"/>
+
+                <StackPanel
+                    Height="30"
+                    Orientation="Horizontal">
+                    <TextBox
+                        x:Name="UrlTextBox"
+                        Text="{Binding Url, Mode=OneWay}"
+                        IsReadOnly="True"
+                        MinWidth="250"
+                        MaxWidth="300"
+                        VerticalContentAlignment="Center"
+                        TextChanged="UrlTextBox_TextChanged"/>
+                    <Button
+                        MinWidth="80"
+                        Content="Copy"
+                        Command="{Binding CopyToClipboardCommand}"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+
+            <!-- Local repository doesn't exist -->
+            <controls:CreateGitRepositoryUserControl
+                Visibility="{Binding IsLocalRepositoryExists, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+        </Grid>
     </Grid>
 </UserControl>

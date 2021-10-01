@@ -32,15 +32,6 @@ namespace CopyGitLink.OutOfProc.CodeLens
 
         public Task<CodeLensDataPointDescriptor?> GetDataAsync(CodeLensDescriptorContext descriptorContext, CancellationToken token)
         {
-            if (!_repositoryService.TryGetKnownRepository(
-                    Descriptor.FilePath,
-                    out _,
-                    out RepositoryInfo? repositoryInfo)
-                || repositoryInfo == null)
-            {
-                return Task.FromResult<CodeLensDataPointDescriptor?>(null);
-            }
-
             var response = new CodeLensDataPointDescriptor
             {
                 Description = $"Copy link to this {Descriptor.Kind.ToString().ToLower()}",

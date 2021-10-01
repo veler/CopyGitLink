@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using CopyGitLink.Def;
+using CopyGitLink.Dialogs;
 using CopyGitLink.Shared;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
@@ -36,28 +37,29 @@ namespace CopyGitLink.Commands
             ThreadHelper.ThrowIfNotOnUIThread();
             var command = (OleMenuCommand)sender;
 
-            var activeDocumentFullFilePath = _openedDocumentService.GetActiveDocumentFullPath();
+            bool activeDocumentFullPathFound = !string.IsNullOrEmpty(_openedDocumentService.GetActiveSolutionDocumentFullPath());
 
-            if (_repositoryService.IsFilePartOfKnownRepository(activeDocumentFullFilePath))
-            {
-                command.Visible = true;
-                command.Enabled = true;
-            }
-            else
-            {
-                command.Visible = false;
-                command.Enabled = false;
-            }
+            // Always enable Copy Git Link menu when the active document is part of a solution (not miscellaneous), even if there
+            // is no Git repository.
+            command.Visible = activeDocumentFullPathFound;
+            command.Enabled = activeDocumentFullPathFound;
         }
 
         protected override void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            string activeDocumentFilePath = _openedDocumentService.GetActiveDocumentFullPath();
+            string activeDocumentFilePath = _openedDocumentService.GetActiveSolutionDocumentFullPath();
 
             if (string.IsNullOrEmpty(activeDocumentFilePath))
             {
+                return;
+            }
+
+            if (!_repositoryService.IsFilePartOfKnownRepository(activeDocumentFilePath))
+            {
+                var dialog = new CreateGitRepositoryDialog();
+                dialog.ShowDialog();
                 return;
             }
 

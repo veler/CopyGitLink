@@ -2,7 +2,9 @@
 
 using CopyGitLink.Def;
 using Microsoft;
+using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Threading;
@@ -51,7 +53,7 @@ namespace CopyGitLink.Core
             return null;
         }
 
-        public string GetActiveDocumentFullPath()
+        public string GetActiveSolutionDocumentFullPath()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             IVsWindowFrame? windowFrame = GetActiveDocumentFrame();
@@ -170,12 +172,26 @@ namespace CopyGitLink.Core
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if ((windowFrame != null)
-                && ErrorHandler.Succeeded(windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_pszMkDocument, out var pvar))
-                && (pvar is string moniker)
-                && !string.IsNullOrWhiteSpace(moniker))
+            // Get the IVsHierarchy corresponding to the window frame.
+            if (windowFrame != null
+                && ErrorHandler.Succeeded(windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_Hierarchy, out var hierarchyVar))
+                && hierarchyVar is IVsHierarchy hierarchy)
             {
-                return moniker;
+                // Get the project ID
+                if (hierarchy is IPersist persist && ErrorHandler.Succeeded(persist.GetClassID(out Guid projectId)))
+                {
+                    // Make sure this isn't a Miscellaneous file
+                    if (projectId != VSConstants.CLSID.MiscellaneousFilesProject_guid)
+                    {
+                        // Retrieve the full path of the document.
+                        if (ErrorHandler.Succeeded(windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_pszMkDocument, out var pvar))
+                            && (pvar is string moniker)
+                            && !string.IsNullOrWhiteSpace(moniker))
+                        {
+                            return moniker;
+                        }
+                    }
+                }
             }
 
             return string.Empty;
