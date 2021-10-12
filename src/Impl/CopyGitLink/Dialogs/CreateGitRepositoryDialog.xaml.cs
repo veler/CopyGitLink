@@ -1,4 +1,8 @@
-﻿using Microsoft.VisualStudio.PlatformUI;
+﻿#nullable enable
+
+using Microsoft.VisualStudio.PlatformUI;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CopyGitLink.Dialogs
 {
@@ -10,6 +14,21 @@ namespace CopyGitLink.Dialogs
         public CreateGitRepositoryDialog()
         {
             InitializeComponent();
+            this.Owner = Application.Current.MainWindow;
+        }
+
+        /// <summary>
+        /// Ensure that our custom caption area can handle dialog move
+        /// </summary
+        private void CaptionArea_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void OkButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
         }
     }
 }

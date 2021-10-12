@@ -70,7 +70,7 @@ namespace CopyGitLink.Core
         {
             // We can't do this immediately since not everything is up to date at the time the frame event is raised.
             // So we use SwitchToMainThreadAsync(alwaysYield: true) which will get the UI thread once it's on idle (and so that the frame is ready).
-            _joinableTaskFactory.RunAsync(async delegate
+            _ = _joinableTaskFactory.RunAsync(async delegate
             {
                 await _joinableTaskFactory.SwitchToMainThreadAsync(alwaysYield: true);
 
