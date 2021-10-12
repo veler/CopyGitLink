@@ -34,8 +34,8 @@ namespace CopyGitLink.OutOfProc.CodeLens
         {
             var response = new CodeLensDataPointDescriptor
             {
-                Description = $"Copy link to this {Descriptor.Kind.ToString().ToLower()}",
-                TooltipText = $"Generate and copy a link to this {Descriptor.Kind.ToString().ToLower()}.",
+                Description = string.Format(Strings.CodeLensCopyLinkToThisMember, Descriptor.Kind.ToString().ToLower()),
+                TooltipText = string.Format(Strings.CodeLensCopyLinkToThisMemberTooltip, Descriptor.Kind.ToString().ToLower()),
                 IntValue = null, // no int value
                 ImageId = new ImageId(KnownImageIds.ImageCatalogGuid, KnownImageIds.Link)
             };

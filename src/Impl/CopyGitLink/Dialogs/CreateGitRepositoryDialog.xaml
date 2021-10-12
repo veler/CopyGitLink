@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:CopyGitLink"
     xmlns:controls="clr-namespace:CopyGitLink.Controls"
     xmlns:vsui="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
     xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
@@ -21,7 +22,7 @@
     Height="200"
     MinHeight="200"
     MinWidth="500"
-    Title="Copy Git Link">
+    Title="{x:Static local:Strings.CreateGitRepositoryDialogTitle}">
     <Border
         x:Uid="WindowBorder"
         BorderBrush="{DynamicResource {x:Static vsui:EnvironmentColors.MainWindowActiveDefaultBorderBrushKey}}"
@@ -40,7 +41,7 @@
                 FontFamily="{x:Static SystemFonts.CaptionFontFamily}"
                 FontSize="{x:Static SystemFonts.CaptionFontSize}"
                 FontStyle="{x:Static SystemFonts.CaptionFontStyle}"
-                Content="Copy Git Link"
+                Content="{x:Static local:Strings.CreateGitRepositoryDialogTitle}"
                 MouseLeftButtonDown="CaptionArea_MouseLeftButtonDown" />
 
             <controls:CreateGitRepositoryUserControl
@@ -50,7 +51,7 @@
                 Margin="20,20,20,0"/>
             <Button
                 Name="OkButton"
-                Content="OK"
+                Content="{x:Static local:Strings.CreateGitRepositoryDialogOKButton}"
                 Style="{DynamicResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}"
                 HorizontalAlignment="Right"
                 Margin="0,0,10,10"
