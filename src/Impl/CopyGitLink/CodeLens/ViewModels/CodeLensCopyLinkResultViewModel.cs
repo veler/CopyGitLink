@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Threading;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
@@ -102,7 +103,7 @@ namespace CopyGitLink.CodeLens.ViewModels
             {
                 string filePath = textDocument.FilePath;
 
-                IsLocalRepositoryExists = _repositoryService.IsFilePartOfKnownRepository(filePath);
+                IsLocalRepositoryExists = _repositoryService.IsFilePartOfKnownRemoteRepository(filePath);
 
                 if (IsLocalRepositoryExists)
                 {
@@ -129,6 +130,10 @@ namespace CopyGitLink.CodeLens.ViewModels
                             Url = url;
                         }
                     }
+                }
+                else
+                {
+                    _repositoryService.StartListeningForRepositoryCreation(Directory.GetParent(filePath).FullName);
                 }
             }
 

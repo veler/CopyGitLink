@@ -47,7 +47,7 @@ namespace CopyGitLink.Core
                 await TaskScheduler.Default;
                 ThreadHelper.ThrowIfOnUIThread();
 
-                if (_repositoryService.TryGetKnownRepository(filePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo)
+                if (_repositoryService.TryGetKnownRemoteRepository(filePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo)
                     && repositoryInfo != null)
                 {
                     // if we do a selection from the bottom to the top, the endLineNumber and startLineNumber are inverted

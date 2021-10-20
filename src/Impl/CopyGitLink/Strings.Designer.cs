@@ -133,7 +133,7 @@ namespace CopyGitLink {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Get started by creating a Git repository.
+        ///   Looks up a localized string similar to Get started by creating a remote Git repository.
         /// </summary>
         public static string CreateGitRepositoryUserControlTitle {
             get {

@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
 using System;
 using System.ComponentModel.Composition;
+using System.IO;
 
 namespace CopyGitLink.Commands
 {
@@ -56,8 +57,9 @@ namespace CopyGitLink.Commands
                 return;
             }
 
-            if (!_repositoryService.IsFilePartOfKnownRepository(activeDocumentFilePath))
+            if (!_repositoryService.IsFilePartOfKnownRemoteRepository(activeDocumentFilePath))
             {
+                _repositoryService.StartListeningForRepositoryCreation(Directory.GetParent(activeDocumentFilePath).FullName);
                 var dialog = new CreateGitRepositoryDialog();
                 dialog.ShowDialog();
                 return;

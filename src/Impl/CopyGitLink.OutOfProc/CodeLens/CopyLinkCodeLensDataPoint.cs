@@ -16,18 +16,14 @@ namespace CopyGitLink.OutOfProc.CodeLens
 {
     internal sealed class CopyLinkCodeLensDataPoint : IAsyncCodeLensDataPoint
     {
-        private readonly IRepositoryService _repositoryService;
-
         public CodeLensDescriptor Descriptor { get; }
 
         public event AsyncEventHandler? InvalidatedAsync;
 
         public CopyLinkCodeLensDataPoint(
-            CodeLensDescriptor descriptor,
-            IRepositoryService repositoryService)
+            CodeLensDescriptor descriptor)
         {
             Descriptor = Requires.NotNull(descriptor, nameof(descriptor));
-            _repositoryService = repositoryService;
         }
 
         public Task<CodeLensDataPointDescriptor?> GetDataAsync(CodeLensDescriptorContext descriptorContext, CancellationToken token)

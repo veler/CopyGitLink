@@ -143,6 +143,6 @@
     <value>Learn more...</value>
   </data>
   <data name="CreateGitRepositoryUserControlTitle" xml:space="preserve">
-    <value>Get started by creating a Git repository</value>
+    <value>Get started by creating a remote Git repository</value>
   </data>
 </root>

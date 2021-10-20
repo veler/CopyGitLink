@@ -35,7 +35,7 @@ namespace CopyGitLink.Def
         /// </remarks>
         /// <param name="filePath">Full path to a file on the hard drive.</param>
         /// <returns>Returns <code>True</code> if the file path is part of a known Git repository.</returns>
-        bool IsFilePartOfKnownRepository(string filePath);
+        bool IsFilePartOfKnownRemoteRepository(string filePath);
 
         /// <summary>
         /// Returns the repository information of a previously discovered repository a given <paramref name="filePath"/> is part of.
@@ -45,6 +45,11 @@ namespace CopyGitLink.Def
         /// <param name="repositoryFolder">The full path to the root folder of the repository on the local machine.</param>
         /// <param name="repositoryInfo">The information about the repository the given <paramref name="filePath"/> is part of.</param>
         /// <returns>Returns <code>True</code> if the file path is part of a known Git repository.</returns>
-        bool TryGetKnownRepository(string filePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo);
+        bool TryGetKnownRemoteRepository(string filePath, out string repositoryFolder, out RepositoryInfo? repositoryInfo);
+
+        /// <summary>
+        /// Starts monitor the given <paramref name="baseDirectory"/> and its parents until a `.git` folder appears.
+        /// </summary>
+        void StartListeningForRepositoryCreation(string baseDirectory);
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.Language.CodeLens;
 using Microsoft.VisualStudio.Language.CodeLens.Remoting;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,12 +46,7 @@ namespace CopyGitLink.OutOfProc.CodeLens
 
         public Task<IAsyncCodeLensDataPoint?> CreateDataPointAsync(CodeLensDescriptor descriptor, CodeLensDescriptorContext descriptorContext, CancellationToken token)
         {
-            if (_repositoryService == null)
-            {
-                return Task.FromResult<IAsyncCodeLensDataPoint?>(null);
-            }
-
-            return Task.FromResult<IAsyncCodeLensDataPoint?>(new CopyLinkCodeLensDataPoint(descriptor, _repositoryService));
+            return Task.FromResult<IAsyncCodeLensDataPoint?>(new CopyLinkCodeLensDataPoint(descriptor));
         }
     }
 }
