@@ -16,6 +16,7 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
     internal sealed class AzureDevOps : IGitOnlineService
     {
         private const string Organization = "Organization";
+        private const string Collection = "Collection";
         private const string Project = "Project";
         private const string Repository = "Repository";
         private const string RepositoryUrl = "RepositoryUrl";
@@ -81,7 +82,8 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
             var relativePath
                 = Uri.EscapeDataString(
                     filePath.Substring(repositoryFolder.Length))
-                .Replace("%5C", "/");
+                .Replace("%5C", "/")
+                .TrimStart('/');
 
             var repositoryUrl = repositoryInfo.Properties[RepositoryUrl];
 
@@ -225,10 +227,11 @@ namespace CopyGitLink.Shared.Core.GitOnlineServices
                      && string.Equals(repositoryUri.Segments[1], "tfs/", StringComparison.Ordinal))
             {
                 properties[Organization] = repositoryUri.Host;
-                properties[Project] = repositoryUri.Segments[2].TrimEnd('/');
-                properties[Repository] = repositoryUri.Segments[4].TrimEnd('/');
+                properties[Collection] = repositoryUri.Segments[2].TrimEnd('/');
+                properties[Project] = repositoryUri.Segments[3].TrimEnd('/');
+                properties[Repository] = repositoryUri.Segments[5].TrimEnd('/');
                 properties[OrganizationUrl] = $"{repositoryUri.Scheme}://{repositoryUri.Authority}/tfs/";
-                properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Project]}/_git/{properties[Repository]}/";
+                properties[RepositoryUrl] = $"{properties[OrganizationUrl]}{properties[Collection]}/{properties[Project]}/_git/{properties[Repository]}/";
                 return true;
             }
 

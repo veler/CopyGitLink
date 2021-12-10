@@ -100,19 +100,21 @@ namespace CopyGitLink.Tests.Core.GitOnlineServices
         public async Task PrivateServerAsync()
         {
             var azureDevOps = new AzureDevOps(null);
-            Assert.IsTrue(await azureDevOps.TryDetectRepositoryInformationAsync(string.Empty, "https://tfs.contoso.com:8080/tfs/Contoso/_git/MyRepository/?foor=bar", CancellationToken.None, out RepositoryInfo repositoryInfo));
+            Assert.IsTrue(await azureDevOps.TryDetectRepositoryInformationAsync(string.Empty, "https://tfs.contoso.com:8080/tfs/CollectionName/Contoso/_git/MyRepository/?foor=bar", CancellationToken.None, out RepositoryInfo repositoryInfo));
             Assert.AreEqual("tfs.contoso.com", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("CollectionName", repositoryInfo.Properties["Collection"]);
             Assert.AreEqual("Contoso", repositoryInfo.Properties["Project"]);
             Assert.AreEqual("MyRepository", repositoryInfo.Properties["Repository"]);
             Assert.AreEqual("https://tfs.contoso.com:8080/tfs/", repositoryInfo.Properties["OrganizationUrl"]);
-            Assert.AreEqual("https://tfs.contoso.com:8080/tfs/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
+            Assert.AreEqual("https://tfs.contoso.com:8080/tfs/CollectionName/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
 
-            Assert.IsTrue(await azureDevOps.TryDetectRepositoryInformationAsync(string.Empty, "https://tfs.contoso.com:8080/tfs/Contoso/_git/MyRepository?foor=bar", CancellationToken.None, out repositoryInfo));
+            Assert.IsTrue(await azureDevOps.TryDetectRepositoryInformationAsync(string.Empty, "https://tfs.contoso.com:8080/tfs/CollectionName/Contoso/_git/MyRepository?foor=bar", CancellationToken.None, out repositoryInfo));
             Assert.AreEqual("tfs.contoso.com", repositoryInfo.Properties["Organization"]);
+            Assert.AreEqual("CollectionName", repositoryInfo.Properties["Collection"]);
             Assert.AreEqual("Contoso", repositoryInfo.Properties["Project"]);
             Assert.AreEqual("MyRepository", repositoryInfo.Properties["Repository"]);
             Assert.AreEqual("https://tfs.contoso.com:8080/tfs/", repositoryInfo.Properties["OrganizationUrl"]);
-            Assert.AreEqual("https://tfs.contoso.com:8080/tfs/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
+            Assert.AreEqual("https://tfs.contoso.com:8080/tfs/CollectionName/Contoso/_git/MyRepository/", repositoryInfo.Properties["RepositoryUrl"]);
         }
 
         [TestMethod]
