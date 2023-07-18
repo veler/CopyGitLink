@@ -27,10 +27,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Language">
-      <Version>17.0.82-g2ecf33c7f7</Version>
+      <Version>17.4.255</Version>
     </PackageReference>
     <PackageReference Include="StreamJsonRpc">
-      <Version>2.5.46</Version>
+      <Version>2.13.33</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
